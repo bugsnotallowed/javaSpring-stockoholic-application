@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Company Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Weather Icons CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/Cprofile.css">
+</head>
+<body>
+<div class="container">
+
+
+    <div class="card">
+        <div class="card__border"></div>
+        <div class="card_title__container">
+            <span class="card_title" th:text="${name}">Company Name</span>
+            <div style="align-items: center">
+                <span class="currency">$</span>
+                <span class="price" th:text="${price}">Price</span>
+                <span class="list_text-right" th:text="${changesPercentage}">%</span>
+            </div>
+
+        </div>
+        <hr class="line" />
+        <div class="container py-2">
+            <div class="row gy-1">
+                <!-- Column 1 -->
+                <div class="col-md-4">
+                    <ul class="list-group">
+                        <!--                Previous Close:-->
+                        <li class="card__list_item">
+                            <span class="list_text">Previous Close:</span>
+                            <span class="list_text-right" th:text="${previousClose}">Previous Close price</span>
+                        </li>
+                        <!--                Exchange-->
+                        <li class="card__list_item">
+                            <span class="list_text" >Exchange:</span>
+                            <span class="list_text-right" th:text="${exchange}">Exchange</span>
+                        </li>
+                        <!--                P/E Ratio-->
+                        <li class="card__list_item">
+                            <span class="list_text">P/E Ratio:</span>
+                            <span class="list_text-right" th:text="${pe}">PE Ratio</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Column 2 -->
+                <div class="col-md-4">
+                    <ul class="list-group">
+                        <!--                Changes-->
+                        <li class="card__list_item">
+                            <div>
+                                <span class="list_text">Changes:</span>
+                                <span class="list_text-right" th:text="${changes}">Changes</span>
+                            </div>
+                        </li>
+                        <!--                DayHigh-->
+                        <li class="card__list_item">
+                            <span class="list_text">DayHigh:</span>
+                            <span class="list_text-right" th:text="${DayHigh}">Today's High</span>
+                        </li>
+                        <!--                YearHigh-->
+                        <li class="card__list_item">
+                            <span class="list_text">YearHigh:</span>
+                            <span class="list_text-right" th:text="${YearHigh}">Year's High</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Column 3 -->
+                <div class="col-md-4">
+                    <ul class="list-group">
+                        <!--                company name-->
+                        <li class="card__list_item">
+                            <span class="list_text">Company Name:</span> <span class="list_text-right" th:text="${name}">Company Name</span>
+
+                        </li>
+                        <!--                DayLow-->
+                        <li class="card__list_item">
+                            <span class="list_text">DayLow:</span>
+                            <span class="list_text-right" th:text="${DayLow}">Today's Low</span>
+                        </li>
+                        <!--                YearLow-->
+                        <li class="card__list_item">
+                            <span class="list_text">YearLow:</span>
+                            <span class="list_text-right" th:text="${YearLow}">Year's Low</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

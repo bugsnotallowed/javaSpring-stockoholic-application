@@ -1,10 +1,10 @@
-package com.example.weather_app;
+package com.example.Stockoholic;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WeatherAppApplicationTests {
+class StockoholicApplicationTests {
 
 	@Test
 	void contextLoads() {

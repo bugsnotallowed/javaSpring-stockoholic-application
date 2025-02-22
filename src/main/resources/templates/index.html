@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>⛅Weather App by GoldenCat⛅</title>
+    <title>Stockoholic Guy</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Weather Icons CSS -->
@@ -10,20 +10,15 @@
 </head>
 <body>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="card-title text-center">Weather App</h1>
-                    <form action="/weather" method="get">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="city" placeholder="Enter city name" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Get Weather</button>
-                    </form>
-                </div>
+    <div class="column justify-content-center">
+        <h1 class="card-title text-center">Search for Company Profiles</h1>
+        <form action="/search" method="get">
+            <div class="column text-center justify-content-center">
+                <input type="text" class="input" name="name" placeholder="Search here..." required>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-        </div>
+
+        </form>
     </div>
 </div>
 
