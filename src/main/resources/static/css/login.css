@@ -1,0 +1,409 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.login-container {
+    width: 50%;
+    padding: 2rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo {
+    margin-bottom: 2rem;
+}
+
+.logo i {
+    font-size: 1.5rem;
+    color: #6c3bff;
+    background-color: #eae4ff;
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    background-color: white;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    transition: background-color 0.3s;
+}
+
+.google-btn:hover {
+    background-color: #f9f9f9;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.divider::before, .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #ddd;
+}
+
+.divider::before {
+    margin-right: 1rem;
+}
+
+.divider::after {
+    margin-left: 1rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+label::after {
+    content: "*";
+    color: #6c3bff;
+    margin-left: 2px;
+}
+
+input {
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    font-size: 0.9rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: #6c3bff;
+}
+
+.checkbox-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.remember input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #6c3bff;
+}
+
+.forget-password {
+    color: #6c3bff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.login-btn {
+    background-color: #6c3bff;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 50px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #5a31d8;
+}
+
+.register {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.register a {
+    color: #6c3bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* Right side */
+.preview-container {
+    width: 50%;
+    background-color: #6c3bff;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-icons {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2rem;
+}
+
+.social-icon {
+    background-color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-icon i {
+    color: #6c3bff;
+    font-size: 1.2rem;
+}
+
+.dashboard-preview {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    width: 80%;
+    max-width: 400px;
+    margin-bottom: 2rem;
+}
+
+.rewards-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    width: 60%;
+    position: absolute;
+    top: 15%;
+    right: 5%;
+}
+
+.rewards-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.rewards-avatar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.avatar-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid #6c3bff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.points-label {
+    text-align: center;
+    color: #888;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.points-value {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.earnings {
+    display: flex;
+    flex-direction: column;
+}
+
+.amount {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.period {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+.highlight {
+    color: #6c3bff;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.graph {
+    margin-top: 1rem;
+    height: 100px;
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.months {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+}
+
+.month {
+    font-size: 0.7rem;
+    color: #888;
+}
+
+.current-month {
+    color: #6c3bff;
+    font-weight: 600;
+}
+
+.graph-line {
+    position: relative;
+    width: 100%;
+    height: 80px;
+    border-bottom: 1px solid #ddd;
+}
+
+.line {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: rgba(108, 59, 255, 0.1);
+    border-radius: 100px 100px 0 0;
+    /*clip-path: path('M0,60 C50,20 150,80 200,10 L200,60 L0,60 Z');*/
+}
+
+.messenger-icon {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    background-color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.messenger-icon i {
+    color: #6c3bff;
+    font-size: 1.5rem;
+}
+
+.tagline {
+    color: white;
+    text-align: center;
+    margin-top: 5rem;
+}
+
+.tagline h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.tagline p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.triangles {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    opacity: 0.2;
+}
+
+@media (max-width: 1024px) {
+    body {
+        flex-direction: column;
+    }
+
+    .login-container, .preview-container {
+        width: 100%;
+    }
+
+    .preview-container {
+        padding: 4rem 2rem;
+    }
+
+    .rewards-card {
+        position: static;
+        width: 80%;
+        margin-bottom: 2rem;
+    }
+
+    .social-icons {
+        position: static;
+        transform: none;
+        margin-bottom: 2rem;
+    }
+
+    .messenger-icon {
+        position: static;
+        margin-top: 2rem;
+    }
+}

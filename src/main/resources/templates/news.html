@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest Financial News | Stock Screener</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/news.css">
+</head>
+<body>
+<!-- Featured newsResp -->
+<header>
+    <div class="container header-content">
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            <span>Stockoholic</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/" th:href="@{/}">Home</a></li>
+                <li><a href="/screener" th:href="@{/screener}">Screener</a></li>
+                <li><a href="/" th:href="@{/watchlist}">Watchlist</a></li>
+                <li><a href="/" th:href="@{/news}">News</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+<!--<div class="featured-news">-->
+<!--    <img class="featured-news-image" src="https://static.seekingalpha.com/cdn/s3/uploads/getty_images/1489202927/image_1489202927.jpg?io=getty-c-w750" alt="Federal Reserve Building">-->
+<!--    <div class="featured-news-content">-->
+<!--        <div class="featured-source">-->
+<!--            <img src="https://i.imgur.com/mIcZCAb.png" alt="Bloomberg">-->
+<!--            <span>Bloomberg</span>-->
+<!--            <span class="time">15 minutes ago</span>-->
+<!--        </div>-->
+<!--        <h1 class="featured-title" th:text="${newsResp.title}">Fed Signals Rate Cut Coming As Inflation Eases</h1>-->
+<!--        <p class="featured-desc" th:text="${newsResp.summary}">Federal Reserve officials indicated they are ready to cut interest rates as early as September if inflation continues to cool, according to minutes from the latest FOMC meeting that sparked a rally in stocks and bonds.</p>-->
+<!--        <div class="newsResp-info">-->
+<!--            <span class="category">Markets</span>-->
+<!--            <span class="read-time" th:text="'Published by ' + ${newsResp.source} + ' on ' + ${newsResp.publishedAt}">23-04-2025</span>-->
+<!--            <span class="read-time">5 min read</span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- Latest News Section -->
+<div class="news-header">
+    <h2>Latest News</h2>
+    <a href="#" class="see-all" th:href="@{/news/all}">See all</a>
+</div>
+
+<div class="news-grid">
+<th:block th:each="news : ${newsList}">
+    <div class="news-card">
+        <img class="news-card-image" th:src="@{/images/news-default.jpg}" alt="News Image">
+        <div class="news-card-content">
+            <div class="news-source">
+                <img src="https://i.imgur.com/KZkxKLT.png" alt="Source Logo">
+                <span th:text="${news.source}">CNBC</span>
+                <span class="time" th:text="${#temporals.format(news.published_at, 'dd MMM yyyy HH:mm')}">Time</span>
+            </div>
+            <h3 class="news-title" th:text="${news.title}">News Title</h3>
+            <p class="news-desc" th:text="${news.description}">News Description</p>
+            <div class="news-info">
+                <a class="btn" th:href="${news.url}" target="_blank">Read more</a>
+            </div>
+        </div>
+    </div>
+</th:block>
+</div>
+<!-- News Grid -->
+<div class="news-grid">
+    <!-- News Card 1 -->
+    <div class="news-card">
+        <img class="news-card-image" src="https://static.seekingalpha.com/cdn/s3/uploads/getty_images/1291567410/image_1291567410.jpg?io=getty-c-w750" alt="Apple Store">
+        <div class="news-card-content">
+            <div class="news-source">
+                <img src="https://i.imgur.com/KZkxKLT.png" alt="CNBC">
+                <span>CNBC</span>
+                <span class="time">3 hours ago</span>
+            </div>
+            <h3 class="news-title">Apple Stock Soars After Beating Q3 Earnings Expectations</h3>
+            <p class="news-desc">Shares of Apple jumped over 5% in after-hours trading as the tech giant reported stronger-than-expected quarterly results and upbeat guidance.</p>
+            <div class="news-info">
+                <span class="category">Stocks</span>
+                <span class="read-time">6 min read</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- News Card 2 -->
+    <div class="news-card">
+        <img class="news-card-image" src="https://static.seekingalpha.com/cdn/s3/uploads/getty_images/1397735269/image_1397735269.jpg?io=getty-c-w750" alt="Crypto Trading">
+        <div class="news-card-content">
+            <div class="news-source">
+                <img src="https://i.imgur.com/dZBmxqs.png" alt="Reuters">
+                <span>Reuters</span>
+                <span class="time">6 hours ago</span>
+            </div>
+            <h3 class="news-title">Bitcoin Surges Past $90,000 As Institutional Adoption Accelerates</h3>
+            <p class="news-desc">The world's largest cryptocurrency reached new all-time highs amid increasing institutional investments and growing mainstream acceptance.</p>
+            <div class="news-info">
+                <span class="category">Crypto</span>
+                <span class="read-time">4 min read</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- News Card 3 -->
+    <div class="news-card">
+        <img class="news-card-image" src="https://static.seekingalpha.com/cdn/s3/uploads/getty_images/1363999867/image_1363999867.jpg?io=getty-c-w750" alt="Oil Barrels">
+        <div class="news-card-content">
+            <div class="news-source">
+                <img src="https://i.imgur.com/3hOFKrL.png" alt="Financial Times">
+                <span>Financial Times</span>
+                <span class="time">May 17, 2025</span>
+            </div>
+            <h3 class="news-title">Oil Prices Tumble As OPEC+ Announces Production Increase</h3>
+            <p class="news-desc">Crude oil futures dropped nearly 4% after major producers agreed to boost output by 1 million barrels per day starting next month.</p>
+            <div class="news-info">
+                <span class="category">Commodities</span>
+                <span class="read-time">5 min read</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- News Card 4 -->
+    <div class="news-card">
+        <img class="news-card-image" src="https://static.seekingalpha.com/cdn/s3/uploads/getty_images/1401656651/image_1401656651.jpg?io=getty-c-w750" alt="Stock Market Display">
+        <div class="news-card-content">
+            <div class="news-source">
+                <img src="https://i.imgur.com/WtJnuVO.png" alt="Wall Street Journal">
+                <span>WSJ</span>
+                <span class="time">May 16, 2025</span>
+            </div>
+            <h3 class="news-title">S&P 500 Enters Correction Territory As Growth Concerns Mount</h3>
+            <p class="news-desc">U.S. stocks dropped sharply as investors grew concerned about slowing economic growth and persistent inflation pressures.</p>
+            <div class="news-info">
+                <span class="category">Markets</span>
+                <span class="read-time">8 min read</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Thymeleaf Template Logic -->
+<div th:if="${featurednewsResp}" class="featured-news" style="display: none;">
+    <img class="featured-news-image" th:src="${featurednewsResp.imageUrl}" th:alt="${featurednewsResp.title}">
+    <div class="featured-news-content">
+        <div class="featured-source">
+            <img th:src="${featurednewsResp.sourceIconUrl}" th:alt="${featurednewsResp.source}">
+            <span th:text="${featurednewsResp.source}">Source</span>
+            <span class="time" th:text="${featurednewsResp.timeAgo}">Time ago</span>
+        </div>
+        <h1 class="featured-title" th:text="${featurednewsResp.title}">newsResp Title</h1>
+        <p class="featured-desc" th:text="${featurednewsResp.description}">newsResp description</p>
+        <div class="newsResp-info">
+            <span class="category" th:text="${featurednewsResp.category}">Category</span>
+            <span class="read-time" th:text="${featurednewsResp.readTime}">Read time</span>
+        </div>
+    </div>
+</div>
+
+<div th:if="${not #lists.isEmpty(latestNews)}" class="news-grid" style="display: none;">
+    <div th:each="newsResp : ${latestNews}" class="news-card">
+        <img class="news-card-image" th:src="${newsResp.imageUrl}" th:alt="${newsResp.title}">
+        <div class="news-card-content">
+            <div class="news-source">
+                <img th:src="${newsResp.sourceIconUrl}" th:alt="${newsResp.source}">
+                <span th:text="${newsResp.source}">Source</span>
+                <span class="time" th:text="${newsResp.timeAgo}">Time ago</span>
+            </div>
+            <h3 class="news-title" th:text="${newsResp.title}">newsResp Title</h3>
+            <p class="news-desc" th:text="${newsResp.description}">newsResp description</p>
+            <div class="news-info">
+                <span class="category" th:text="${newsResp.category}">Category</span>
+                <span class="read-time" th:text="${newsResp.readTime}">Read time</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

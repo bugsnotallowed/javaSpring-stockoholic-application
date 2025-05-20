@@ -1,6 +1,9 @@
 package com.example.Stockoholic.controller;
 
 import com.example.Stockoholic.model.IpoResp;
+import com.example.Stockoholic.model.newsResp;
+import com.example.Stockoholic.service.NewsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,15 +11,40 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Controller
 public class IpoController {
 
     @Value("${api.key2}")
     private String apiKey;
 
+    @Value("${api.key3}")
+    private String newsapikey;
+
+    @Autowired
+    private NewsService newsService;
+
     @GetMapping("/")
     public String getIndex() {
         return "index";
+    }
+
+    @GetMapping("/screener")
+    public String getScreener() {
+        return "screener";
+    }
+
+    @GetMapping("/watchlist")
+    public String getWatchList() {
+        return "watchlist";
+    }
+
+    @GetMapping("/news")
+    public String showNewsPage(Model model) {
+        List<newsResp> newsList = newsService.fetchNews();
+        model.addAttribute("newsList", newsList);
+        return "news"; // maps to news.html
     }
 
     @GetMapping("/search")
@@ -57,6 +85,7 @@ public class IpoController {
             model.addAttribute("error", "404 Error!");
         }
 
-        return "Cprofile";
+        return "CompanyDashboard";
     }
+
 }

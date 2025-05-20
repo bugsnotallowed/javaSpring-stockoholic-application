@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockSense - Advanced Stock Screener</title>
+  <!-- Weather Icons CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+<!--  <style>-->
+<!--    :root {-->
+<!--      &#45;&#45;primary-color: #2c3e50;-->
+<!--      &#45;&#45;secondary-color: #3498db;-->
+<!--      &#45;&#45;accent-color: #e74c3c;-->
+<!--      &#45;&#45;positive-color: #2ecc71;-->
+<!--      &#45;&#45;negative-color: #e74c3c;-->
+<!--      &#45;&#45;neutral-color: #f5f6fa;-->
+<!--      &#45;&#45;text-color: #2c3e50;-->
+<!--      &#45;&#45;light-text: #ecf0f1;-->
+<!--      &#45;&#45;card-bg: #fff;-->
+<!--      &#45;&#45;hover-color: #f8f9fa;-->
+<!--    }-->
+
+<!--    * {-->
+<!--      margin: 0;-->
+<!--      padding: 0;-->
+<!--      box-sizing: border-box;-->
+<!--      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;-->
+<!--    }-->
+
+<!--    body {-->
+<!--      background-color: var(&#45;&#45;neutral-color);-->
+<!--      color: var(&#45;&#45;text-color);-->
+<!--      line-height: 1.6;-->
+<!--    }-->
+
+<!--    .container {-->
+<!--      max-width: 1200px;-->
+<!--      margin: 0 auto;-->
+<!--      padding: 20px;-->
+<!--    }-->
+
+<!--    header {-->
+<!--      background-color: var(&#45;&#45;primary-color);-->
+<!--      color: var(&#45;&#45;light-text);-->
+<!--      padding: 15px 0;-->
+<!--      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);-->
+<!--    }-->
+
+<!--    .header-content {-->
+<!--      display: flex;-->
+<!--      justify-content: space-between;-->
+<!--      align-items: center;-->
+<!--    }-->
+
+<!--    .logo {-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      font-size: 24px;-->
+<!--      font-weight: bold;-->
+<!--    }-->
+
+<!--    .logo i {-->
+<!--      margin-right: 10px;-->
+<!--      color: var(&#45;&#45;secondary-color);-->
+<!--    }-->
+
+<!--    nav ul {-->
+<!--      display: flex;-->
+<!--      list-style: none;-->
+<!--    }-->
+
+<!--    nav ul li {-->
+<!--      margin-left: 20px;-->
+<!--    }-->
+
+<!--    nav ul li a {-->
+<!--      color: var(&#45;&#45;light-text);-->
+<!--      text-decoration: none;-->
+<!--      font-weight: 500;-->
+<!--      transition: color 0.3s ease;-->
+<!--    }-->
+
+<!--    nav ul li a:hover {-->
+<!--      color: var(&#45;&#45;secondary-color);-->
+<!--    }-->
+
+<!--    .search-bar {-->
+<!--      padding: 20px 0;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      background-color: var(&#45;&#45;primary-color);-->
+<!--      border-bottom: 1px solid rgba(255, 255, 255, 0.1);-->
+<!--    }-->
+
+<!--    .search-bar input {-->
+<!--      width: 60%;-->
+<!--      padding: 12px 20px;-->
+<!--      border: none;-->
+<!--      border-radius: 30px 0 0 30px;-->
+<!--      outline: none;-->
+<!--      font-size: 16px;-->
+<!--    }-->
+
+<!--    .search-bar button {-->
+<!--      padding: 12px 20px;-->
+<!--      border: none;-->
+<!--      background-color: var(&#45;&#45;secondary-color);-->
+<!--      color: white;-->
+<!--      border-radius: 0 30px 30px 0;-->
+<!--      cursor: pointer;-->
+<!--      transition: background-color 0.3s ease;-->
+<!--    }-->
+
+<!--    .search-bar button:hover {-->
+<!--      background-color: #2980b9;-->
+<!--    }-->
+
+<!--    .stock-card {-->
+<!--      background-color: var(&#45;&#45;card-bg);-->
+<!--      border-radius: 10px;-->
+<!--      margin: 30px 0;-->
+<!--      overflow: hidden;-->
+<!--      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);-->
+<!--      transition: transform 0.3s ease, box-shadow 0.3s ease;-->
+<!--    }-->
+
+<!--    .stock-card:hover {-->
+<!--      transform: translateY(-5px);-->
+<!--      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);-->
+<!--    }-->
+
+<!--    .stock-header {-->
+<!--      display: flex;-->
+<!--      justify-content: space-between;-->
+<!--      align-items: center;-->
+<!--      padding: 20px;-->
+<!--      background-color: var(&#45;&#45;primary-color);-->
+<!--      color: var(&#45;&#45;light-text);-->
+<!--    }-->
+
+<!--    .stock-name {-->
+<!--      font-size: 24px;-->
+<!--      font-weight: bold;-->
+<!--    }-->
+
+<!--    .stock-price {-->
+<!--      font-size: 30px;-->
+<!--      font-weight: bold;-->
+<!--    }-->
+
+<!--    .stock-details {-->
+<!--      display: grid;-->
+<!--      grid-template-columns: repeat(3, 1fr);-->
+<!--      gap: 20px;-->
+<!--      padding: 20px;-->
+<!--    }-->
+
+<!--    .detail-group {-->
+<!--      display: flex;-->
+<!--      flex-direction: column;-->
+<!--      padding: 15px;-->
+<!--      border-radius: 8px;-->
+<!--      background-color: var(&#45;&#45;hover-color);-->
+<!--      transition: background-color 0.3s ease;-->
+<!--    }-->
+
+<!--    .detail-group:hover {-->
+<!--      background-color: rgba(52, 152, 219, 0.1);-->
+<!--    }-->
+
+<!--    .detail-label {-->
+<!--      font-size: 14px;-->
+<!--      color: #7f8c8d;-->
+<!--      margin-bottom: 5px;-->
+<!--    }-->
+
+<!--    .detail-value {-->
+<!--      font-size: 18px;-->
+<!--      font-weight: 600;-->
+<!--    }-->
+
+<!--    .positive {-->
+<!--      color: var(&#45;&#45;positive-color);-->
+<!--    }-->
+
+<!--    .negative {-->
+<!--      color: var(&#45;&#45;negative-color);-->
+<!--    }-->
+
+<!--    .chart-section {-->
+<!--      padding: 20px;-->
+<!--      border-top: 1px solid #ecf0f1;-->
+<!--    }-->
+
+<!--    .chart-header {-->
+<!--      display: flex;-->
+<!--      justify-content: space-between;-->
+<!--      align-items: center;-->
+<!--      margin-bottom: 15px;-->
+<!--    }-->
+
+<!--    .chart-title {-->
+<!--      font-size: 18px;-->
+<!--      font-weight: 600;-->
+<!--    }-->
+
+<!--    .time-filters {-->
+<!--      display: flex;-->
+<!--    }-->
+
+<!--    .time-filter {-->
+<!--      padding: 5px 15px;-->
+<!--      margin-left: 5px;-->
+<!--      border: 1px solid #ddd;-->
+<!--      border-radius: 20px;-->
+<!--      cursor: pointer;-->
+<!--      transition: all 0.3s ease;-->
+<!--    }-->
+
+<!--    .time-filter.active {-->
+<!--      background-color: var(&#45;&#45;secondary-color);-->
+<!--      color: white;-->
+<!--      border-color: var(&#45;&#45;secondary-color);-->
+<!--    }-->
+
+<!--    .chart-placeholder {-->
+<!--      height: 300px;-->
+<!--      background-color: var(&#45;&#45;hover-color);-->
+<!--      border-radius: 8px;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      align-items: center;-->
+<!--      color: #7f8c8d;-->
+<!--    }-->
+
+<!--    .fundamentals-section {-->
+<!--      padding: 20px;-->
+<!--      border-top: 1px solid #ecf0f1;-->
+<!--    }-->
+
+<!--    .fundamentals-title {-->
+<!--      font-size: 18px;-->
+<!--      font-weight: 600;-->
+<!--      margin-bottom: 15px;-->
+<!--    }-->
+
+<!--    .fundamentals-grid {-->
+<!--      display: grid;-->
+<!--      grid-template-columns: repeat(4, 1fr);-->
+<!--      gap: 15px;-->
+<!--    }-->
+
+<!--    .fundamental-item {-->
+<!--      padding: 15px;-->
+<!--      background-color: var(&#45;&#45;hover-color);-->
+<!--      border-radius: 8px;-->
+<!--      transition: background-color 0.3s ease;-->
+<!--    }-->
+
+<!--    .fundamental-item:hover {-->
+<!--      background-color: rgba(52, 152, 219, 0.1);-->
+<!--    }-->
+
+<!--    .fundamental-label {-->
+<!--      font-size: 14px;-->
+<!--      color: #7f8c8d;-->
+<!--      margin-bottom: 5px;-->
+<!--    }-->
+
+<!--    .fundamental-value {-->
+<!--      font-size: 18px;-->
+<!--      font-weight: 600;-->
+<!--    }-->
+
+<!--    footer {-->
+<!--      background-color: var(&#45;&#45;primary-color);-->
+<!--      color: var(&#45;&#45;light-text);-->
+<!--      text-align: center;-->
+<!--      padding: 20px 0;-->
+<!--      margin-top: 40px;-->
+<!--    }-->
+
+<!--    @media (max-width: 768px) {-->
+<!--      .stock-details {-->
+<!--        grid-template-columns: repeat(2, 1fr);-->
+<!--      }-->
+
+<!--      .fundamentals-grid {-->
+<!--        grid-template-columns: repeat(2, 1fr);-->
+<!--      }-->
+
+<!--      .search-bar input {-->
+<!--        width: 70%;-->
+<!--      }-->
+<!--    }-->
+
+<!--    @media (max-width: 480px) {-->
+<!--      .stock-details,-->
+<!--      .fundamentals-grid {-->
+<!--        grid-template-columns: 1fr;-->
+<!--      }-->
+
+<!--      .search-bar input {-->
+<!--        width: 60%;-->
+<!--      }-->
+
+<!--      .stock-header {-->
+<!--        flex-direction: column;-->
+<!--        align-items: flex-start;-->
+<!--      }-->
+
+<!--      .stock-price {-->
+<!--        margin-top: 10px;-->
+<!--      }-->
+<!--    }-->
+<!--  </style>-->
+</head>
+<body>
+<header>
+  <div class="container header-content">
+    <div class="logo">
+      <i class="fas fa-chart-line"></i>
+      <span>Stockoholic</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/" th:href="@{/}">Home</a></li>
+        <li><a href="/screener" th:href="@{/screener}">Screener</a></li>
+        <li><a href="/" th:href="@{/watchlist}">Watchlist</a></li>
+        <li><a href="/" th:href="@{/news}">News</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Register</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+<div class="search-bar">
+  <div class="hero-search">
+    <form th:action="@{/search}" method="get">
+      <input type="text" name="name" placeholder="Search for stocks by name or ticker symbol..." required>
+      <button type="submit"><i class="fas fa-search"></i> Search</button>
+    </form>
+  </div>
+</div>
+
+<div class="container">
+  <div class="stock-card">
+    <div class="stock-header">
+      <div class="stock-name">
+        <h2 th:text="${name} + ' (' + ${symbol} + ')'">Apple Inc. (AAPL)</h2>
+        <span th:text="${exchange}">NASDAQ</span>
+      </div>
+      <div class="stock-price" th:text="'$' + ${price}">
+        $211.25
+      </div>
+    </div>
+
+    <div class="stock-details">
+      <div class="detail-group">
+        <span class="detail-label">Previous Close</span>
+        <span class="detail-value" th:text="'$' + ${previousClose}">$211.45</span>
+      </div>
+      <div class="detail-group">
+        <span class="detail-label">Changes</span>
+        <span class="detail-value" th:class="${changes}"></span>
+        <span class="ChangesPercentage" th:class="${ChangesPercentage}"></span>
+      </div>
+      <div class="detail-group">
+        <span class="detail-label">Company Name</span>
+        <span class="detail-value" th:text="${name}">Apple Inc.</span>
+      </div>
+      <div class="detail-group">
+        <span class="detail-label">Exchange</span>
+        <span class="detail-value" th:text="${exchange}">NASDAQ</span>
+      </div>
+      <div class="detail-group">
+        <span class="detail-label">Day High</span>
+        <span class="detail-value" th:text="'$' + ${DayHigh}">$212.57</span>
+      </div>
+      <div class="detail-group">
+        <span class="detail-label">Day Low</span>
+        <span class="detail-value" th:text="'$' + ${DayLow}">$209.77</span>
+      </div>
+      <div class="detail-group">
+        <span class="detail-label">P/E Ratio</span>
+        <span class="detail-value" th:text="${pe}">29.8</span>
+      </div>
+      <div class="detail-group">
+        <span class="detail-label">Year High</span>
+        <span class="detail-value" th:text="'$' + ${YearHigh}">$260.1</span>
+      </div>
+      <div class="detail-group">
+        <span class="detail-label">Year Low</span>
+        <span class="detail-value" th:text="'$' + ${YearLow}">$169.21</span>
+      </div>
+    </div>
+
+    <div class="chart-section">
+      <div class="chart-header">
+        <h3 class="chart-title">Price Chart</h3>
+        <div class="time-filters">
+          <div class="time-filter">1D</div>
+          <div class="time-filter active">1W</div>
+          <div class="time-filter">1M</div>
+          <div class="time-filter">3M</div>
+          <div class="time-filter">1Y</div>
+          <div class="time-filter">5Y</div>
+        </div>
+      </div>
+      <div class="chart-placeholder">
+        Stock price chart will be displayed here
+      </div>
+    </div>
+
+    <div class="fundamentals-section">
+      <h3 class="fundamentals-title">Key Fundamentals</h3>
+      <div class="fundamentals-grid">
+        <div class="fundamental-item">
+          <div class="fundamental-label">Market Cap</div>
+          <div class="fundamental-value">$3.28T</div>
+        </div>
+        <div class="fundamental-item">
+          <div class="fundamental-label">Dividend Yield</div>
+          <div class="fundamental-value">0.49%</div>
+        </div>
+        <div class="fundamental-item">
+          <div class="fundamental-label">EPS (TTM)</div>
+          <div class="fundamental-value">$7.09</div>
+        </div>
+        <div class="fundamental-item">
+          <div class="fundamental-label">Volume</div>
+          <div class="fundamental-value">45.32M</div>
+        </div>
+        <div class="fundamental-item">
+          <div class="fundamental-label">Avg Volume</div>
+          <div class="fundamental-value">53.72M</div>
+        </div>
+<!--        <div class="fundamental-item">-->
+<!--          <div class="fundamental-label">52 Week Range</div>-->
+<!--          <div class="fundamental-value" th:text="'$' + ${YearLow} + ' - $' + ${YearHigh}">$169.21 - $260.10</div>-->
+<!--        </div>-->
+        <div class="fundamental-item">
+          <div class="fundamental-label">Beta</div>
+          <div class="fundamental-value">1.28</div>
+        </div>
+        <div class="fundamental-item">
+          <div class="fundamental-label">Revenue (TTM)</div>
+          <div class="fundamental-value">$394.2B</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 StockSense. All rights reserved. Market data provided for educational purposes only.</p>
+  </div>
+</footer>
+</body>
+</html>

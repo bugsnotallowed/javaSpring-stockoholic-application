@@ -1,30 +1,175 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Stockoholic Guy</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Weather Icons CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stockoholic - Your Smart Stock Analysis Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="/css/index.css">
 </head>
 <body>
-<div class="container">
-    <div class="column justify-content-center">
-        <h1 class="card-title text-center">Search for Company Profiles</h1>
-        <form action="/search" method="get">
-            <div class="column text-center justify-content-center">
-                <input type="text" class="input" name="name" placeholder="Search here..." required>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-
-        </form>
+<header>
+    <div class="container header-content">
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            <span>Stockoholic</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/" th:href="@{/}">Home</a></li>
+                <li><a href="/screener" th:href="@{/screener}">Screener</a></li>
+                <li><a href="/" th:href="@{/watchlist}">Watchlist</a></li>
+                <li><a href="/" th:href="@{/news}">News</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
     </div>
-</div>
+</header>
 
-<!-- Bootstrap JS and dependencies -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container hero-content">
+        <h1>Smart Stock Analysis At Your Fingertips</h1>
+        <p>Get real-time data, advanced analytics, and expert insights to make informed investment decisions</p>
+        <div class="hero-search">
+            <form th:action="@{/search}" method="get">
+                <input type="text" name="name" placeholder="Search for stocks by name or ticker symbol..." required>
+                <button type="submit"><i class="fas fa-search"></i> Search</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Powerful Stock Analysis Tools</h2>
+            <p class="section-subtitle">Discover why thousands of investors trust Stockoholic for their market research and stock analysis needs</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <h3 class="feature-title">Advanced Stock Screening</h3>
+                <p class="feature-desc">Filter stocks using over 150+ technical and fundamental metrics to find the perfect investment opportunities that match your strategy.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="feature-title">Real-Time Data</h3>
+                <p class="feature-desc">Access live market data, breaking news alerts, and instant notifications on price movements to stay ahead of market trends.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="feature-title">AI-Powered Insights</h3>
+                <p class="feature-desc">Our machine learning algorithms analyze market patterns and provide personalized stock recommendations based on your risk profile.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Popular Stocks Section -->
+<section class="popular-stocks">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Popular Stocks</h2>
+            <p class="section-subtitle">Track the performance of market-leading companies</p>
+        </div>
+        <div class="stocks-grid">
+            <div class="stock-item">
+                <div class="stock-symbol">AAPL</div>
+                <div class="stock-company">Apple Inc.</div>
+                <div class="stock-price">$211.25</div>
+                <div class="stock-change stock-down">-0.09%</div>
+            </div>
+            <div class="stock-item">
+                <div class="stock-symbol">MSFT</div>
+                <div class="stock-company">Microsoft Corporation</div>
+                <div class="stock-price">$415.37</div>
+                <div class="stock-change stock-up">+1.25%</div>
+            </div>
+            <div class="stock-item">
+                <div class="stock-symbol">GOOGL</div>
+                <div class="stock-company">Alphabet Inc.</div>
+                <div class="stock-price">$178.93</div>
+                <div class="stock-change stock-up">+0.78%</div>
+            </div>
+            <div class="stock-item">
+                <div class="stock-symbol">AMZN</div>
+                <div class="stock-company">Amazon.com Inc.</div>
+                <div class="stock-price">$182.41</div>
+                <div class="stock-change stock-up">+0.56%</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+    <div class="container">
+        <h2 class="cta-title">Ready to Make Smarter Investment Decisions?</h2>
+        <p class="cta-desc">Join thousands of investors who use Stockoholic to discover new opportunities, analyze market trends, and grow their portfolio.</p>
+        <a href="/register" class="btn">Create Free Account</a>
+        <a href="/index" class="btn btn-secondary">Learn More</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Stockoholic</span>
+                </div>
+                <p class="footer-about">Stockoholic provides investors with accurate, timely market data and powerful analytical tools to make informed investment decisions.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-links-column">
+                <h3 class="footer-heading">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Team</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-links-column">
+                <h3 class="footer-heading">Features</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Stock Screener</a></li>
+                    <li><a href="#">Real-Time Data</a></li>
+                    <li><a href="#">Technical Analysis</a></li>
+                    <li><a href="#">Portfolio Tracking</a></li>
+                </ul>
+            </div>
+            <div class="footer-links-column">
+                <h3 class="footer-heading">Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Stockoholic. All rights reserved. Market data provided for educational purposes only.</p>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

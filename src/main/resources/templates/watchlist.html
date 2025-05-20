@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stockoholic - Watchlist</title>
+    <link rel="stylesheet" href="/css/watchlist.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+<body>
+<header>
+    <div class="container header-content">
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            <span>Stockoholic</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/" th:href="@{/}">Home</a></li>
+                <li><a href="/screener" th:href="@{/screener}">Screener</a></li>
+                <li><a href="/" th:href="@{/watchlist}">Watchlist</a></li>
+                <li><a href="/" th:href="@{/news}">News</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+<div class="container">
+    <div class="watchlist-header">
+        <h1>Your Watchlists</h1>
+    </div>
+
+    <div class="lists-container">
+        <div class="lists-sidebar">
+            <h2>My Lists</h2>
+            <div class="list-actions">
+                <button id="createListBtn" class="btn btn-primary btn-sm">Create New List</button>
+            </div>
+            <ul id="watchListsContainer" class="watch-lists">
+                <!-- Lists will be populated here by JavaScript -->
+                <li th:each="list : ${userWatchlists}"
+                    th:data-id="${list.id}"
+                    th:class="${list.id == selectedListId ? 'watch-list-item active' : 'watch-list-item'}">
+                    <span th:text="${list.name}">Default List</span>
+                    <div class="watch-list-actions">
+                        <button class="edit-list"><i class="fas fa-edit"></i></button>
+                        <button class="delete-list"><i class="fas fa-trash"></i></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="stocks-container">
+            <div id="emptyState" th:if="${selectedListId == null}" class="empty-state">
+                <i class="fas fa-list"></i>
+                <h3>No watchlist selected</h3>
+                <p>Select a watchlist from the left or create a new one to get started.</p>
+            </div>
+
+            <div id="listContent" th:if="${selectedListId != null}">
+                <div class="stocks-header">
+                    <h2 id="selectedListName" th:text="${selectedListName}">List Name</h2>
+                </div>
+
+                <table class="stocks-table">
+                    <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Change</th>
+                        <th>Change %</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="stocksTableBody">
+                    <!-- Stocks will be populated here by Thymeleaf/JavaScript -->
+                    <tr th:each="stock : ${watchlistStocks}" th:data-id="${stock.id}">
+                        <td class="stock-symbol" th:text="${stock.symbol}">AAPL</td>
+                        <td class="stock-name" th:text="${stock.name}">Apple Inc.</td>
+                        <td class="stock-price" th:text="${'$' + #numbers.formatDecimal(stock.price, 1, 2)}">$175.84</td>
+                        <td th:class="${stock.change >= 0 ? 'stock-change positive' : 'stock-change negative'}"
+                            th:text="${(stock.change >= 0 ? '+' : '') + #numbers.formatDecimal(stock.change, 1, 2)}">+2.34</td>
+                        <td th:class="${stock.changePercent >= 0 ? 'stock-change positive' : 'stock-change negative'}"
+                            th:text="${(stock.changePercent >= 0 ? '+' : '') + #numbers.formatDecimal(stock.changePercent, 1, 2) + '%'}">+1.35%</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm remove-stock">Remove</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div th:if="${#lists.isEmpty(watchlistStocks)}" class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <h3>No stocks in this watchlist</h3>
+                    <p>Add stocks from the screener to keep track of them here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create List Modal -->
+<div id="createListModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Create New Watchlist</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="createListForm">
+                <div class="form-group">
+                    <label for="listName">List Name</label>
+                    <input type="text" id="listName" name="listName" placeholder="Enter a name for your watchlist" required>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary modal-close">Cancel</button>
+            <button id="saveListBtn" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+</div>
+
+<!-- Edit List Modal -->
+<div id="editListModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Edit Watchlist</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="editListForm">
+                <input type="hidden" id="editListId">
+                <div class="form-group">
+                    <label for="editListName">List Name</label>
+                    <input type="text" id="editListName" name="editListName" placeholder="Enter a new name for your watchlist" required>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary modal-close">Cancel</button>
+            <button id="updateListBtn" class="btn btn-primary">Update</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete List Confirmation Modal -->
+<div id="deleteListModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Delete Watchlist</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete "<span id="deleteListName"></span>"? This action cannot be undone.</p>
+            <input type="hidden" id="deleteListId">
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary modal-close">Cancel</button>
+            <button id="confirmDeleteBtn" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- Font Awesome for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
+<script th:inline="javascript">
+    // Get data from Thymeleaf
+    const watchlists = /*[[${userWatchlists}]]*/ [];
+    const selectedListId = /*[[${selectedListId}]]*/ null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Modal functionality
+        const modals = document.querySelectorAll('.modal');
+        const modalCloseBtns = document.querySelectorAll('.modal-close');
+        const createListBtn = document.getElementById('createListBtn');
+        const createListModal = document.getElementById('createListModal');
+        const editListModal = document.getElementById('editListModal');
+        const deleteListModal = document.getElementById('deleteListModal');
+        const saveListBtn = document.getElementById('saveListBtn');
+        const updateListBtn = document.getElementById('updateListBtn');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+        // Open create list modal
+        createListBtn.addEventListener('click', function() {
+            document.getElementById('listName').value = '';
+            openModal(createListModal);
+        });
+
+        // Close modals
+        modalCloseBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                closeAllModals();
+            });
+        });
+
+        // Close modal when clicking outside
+        modals.forEach(modal => {
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeAllModals();
+                }
+            });
+        });
+
+        // Create new watchlist
+        saveListBtn.addEventListener('click', function() {
+            const listName = document.getElementById('listName').value.trim();
+            if (listName) {
+                createWatchlist(listName);
+                closeAllModals();
+            }
+        });
+
+        // Update watchlist
+        updateListBtn.addEventListener('click', function() {
+            const listId = document.getElementById('editListId').value;
+            const listName = document.getElementById('editListName').value.trim();
+            if (listId && listName) {
+                updateWatchlist(listId, listName);
+                closeAllModals();
+            }
+        });
+
+        // Delete watchlist
+        confirmDeleteBtn.addEventListener('click', function() {
+            const listId = document.getElementById('deleteListId').value;
+            if (listId) {
+                deleteWatchlist(listId);
+                closeAllModals();
+            }
+        });
+
+        // Set up watchlist item event handlers
+        setupWatchlistItemHandlers();
+
+        // Set up stock removal handlers
+        setupStockRemovalHandlers();
+    });
+
+    // Set up event handlers for watchlist items
+    function setupWatchlistItemHandlers() {
+        const watchlistItems = document.querySelectorAll('.watch-list-item');
+
+        watchlistItems.forEach(item => {
+            // Click on watchlist to view it
+            item.addEventListener('click', function(event) {
+                if (!event.target.closest('.watch-list-actions')) {
+                    const listId = this.getAttribute('data-id');
+                    window.location.href = `/watchlist?listId=${listId}`;
+                }
+            });
+
+            // Edit watchlist
+            const editBtn = item.querySelector('.edit-list');
+            if (editBtn) {
+                editBtn.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const listItem = this.closest('.watch-list-item');
+                    const listId = listItem.getAttribute('data-id');
+                    const listName = listItem.querySelector('span').textContent;
+
+                    document.getElementById('editListId').value = listId;
+                    document.getElementById('editListName').value = listName;
+                    openModal(document.getElementById('editListModal'));
+                });
+            }
+
+            // Delete watchlist
+            const deleteBtn = item.querySelector('.delete-list');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const listItem = this.closest('.watch-list-item');
+                    const listId = listItem.getAttribute('data-id');
+                    const listName = listItem.querySelector('span').textContent;
+
+                    document.getElementById('deleteListId').value = listId;
+                    document.getElementById('deleteListName').textContent = listName;
+                    openModal(document.getElementById('deleteListModal'));
+                });
+            }
+        });
+    }
+
+    // Set up event handlers for stock removal
+    function setupStockRemovalHandlers() {
+        const removeButtons = document.querySelectorAll('.remove-stock');
+
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const stockRow = this.closest('tr');
+                const stockId = stockRow.getAttribute('data-id');
+                const listId = /*[[${selectedListId}]]*/ null;
+
+                if (stockId && listId) {
+                    removeStockFromWatchlist(listId, stockId, stockRow);
+                }
+            });
+        });
+    }
+
+    // API Functions
+
+    // Create a new watchlist
+    function createWatchlist(name) {
+        fetch('/api/watchlist/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: name })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to create watchlist');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Redirect to the new watchlist
+                window.location.href = `/watchlist?listId=${data.id}`;
+            })
+            .catch(error => {
+                console.error('Error creating watchlist:', error);
+                alert('Failed to create watchlist. Please try again.');
+            });
+    }
+
+    // Update a watchlist
+    function updateWatchlist(id, name) {
+        fetch(`/api/watchlist/${id}/update`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: name })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to update watchlist');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Refresh the page to show updated name
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error updating watchlist:', error);
+                alert('Failed to update watchlist. Please try again.');
+            });
+    }
+
+    // Delete a watchlist
+    function deleteWatchlist(id) {
+        fetch(`/api/watchlist/${id}/delete`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete watchlist');
+                }
+                // Redirect to watchlist page without a specific list selected
+                window.location.href = '/watchlist';
+            })
+            .catch(error => {
+                console.error('Error deleting watchlist:', error);
+                alert('Failed to delete watchlist. Please try again.');
+            });
+    }
+
+    // Remove a stock from watchlist
+    function removeStockFromWatchlist(listId, stockId, stockRow) {
+        fetch(`/api/watchlist/${listId}/stocks/${stockId}/remove`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to remove stock');
+                }
+                // Remove the row from the table
+                stockRow.remove();
+
+                // Check if table is empty and show empty state if necessary
+                const tableBody = document.getElementById('stocksTableBody');
+                if (tableBody.children.length === 0) {
+                    const stocksContainer = document.querySelector('.stocks-container');
+                    const emptyState = document.createElement('div');
+                    emptyState.className = 'empty-state';
+                    emptyState.innerHTML = `
+                        <i class="fas fa-search"></i>
+                        <h3>No stocks in this watchlist</h3>
+                        <p>Add stocks from the screener to keep track of them here.</p>
+                    `;
+                    stocksContainer.appendChild(emptyState);
+                }
+            })
+            .catch(error => {
+                console.error('Error removing stock:', error);
+                alert('Failed to remove stock. Please try again.');
+            });
+    }
+
+    // Helper functions
+
+    // Open a modal
+    function openModal(modal) {
+        modal.classList.add('show');
+    }
+
+    // Close all modals
+    function closeAllModals() {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            modal.classList.remove('show');
+        });
+    }
+</script>
+</body>
+</html>
